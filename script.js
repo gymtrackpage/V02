@@ -33,11 +33,11 @@ function calculateVO2Max() {
     }
 
     const timeParts = timeString.split(':');
-    const hours = parseInt(timeParts[0], 10) || 0; // Default to 0 if no hours
+    const hours = parseInt(timeParts[0], 10) || 0;
     const minutes = parseInt(timeParts[1], 10);
     const seconds = parseInt(timeParts[2], 10);
     const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
-    
+
     // Calculate velocity in meters per second
     const velocity = distance / timeInSeconds; 
 
@@ -56,11 +56,11 @@ function calculateVO2Max() {
 
 function calculateJackDaniels(velocity) {
   const VDOT = -4.6 + 0.182258 * velocity + 0.000104 * velocity**2;
-  const VO2max = (VDOT + 1.4) / 0.8;
+  const VO2max = (VDOT + 1.4) / 0.8; // Calculate VO2max from VDOT
   return VO2max;
 }
 
-function calculateRiegel(velocity) { 
+function calculateRiegel(velocity) {
   return (-4.60 + 0.1825 * velocity + 0.000104 * velocity**2) * 0.8 + 6;
 }
 
