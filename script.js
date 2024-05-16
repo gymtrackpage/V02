@@ -6,8 +6,8 @@ function addRaceInput() {
   newRaceDiv.classList.add("race-input");
   newRaceDiv.innerHTML = `
     <select class="distance">
-      <option value="5000">5K</option>
-      <option value="10000">10K</option>
+      <option value="5000">5Km</option>
+      <option value="10000">10Km</option>
       <option value="21097.5">Half Marathon</option>
       <option value="42195">Marathon</option>
     </select>
