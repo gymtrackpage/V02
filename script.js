@@ -37,7 +37,29 @@ function calculateVO2Max() {
     races.push({ distance, timeInSeconds });
   }
 
-  // ... (rest of the calculation logic using 'races' array remains the same)
+  const jackDanielsResults = races.map(race => calculateJackDaniels(race.distance, race.timeInSeconds));
+  const riegelResults = races.map(race => calculateRiegel(race.distance, race.timeInSeconds));
+
+  const avgJackDaniels = average(jackDanielsResults);
+  const avgRiegel = average(riegelResults);
+
+  document.getElementById('jackDanielsResult').textContent = avgJackDaniels.toFixed(2);
+  document.getElementById('riegelResult').textContent = avgRiegel.toFixed(2);
+}
+
+function calculateJackDaniels(distance, timeInSeconds) {
+  const velocity = distance / timeInSeconds;
+  const VDOT = -4.6 + 0.182258 * velocity + 0.000104 * velocity**2;
+  return (VDOT + 1.4) / 0.8;
+}
+
+function calculateRiegel(distance, timeInSeconds) {
+  const velocity = distance / timeInSeconds;
+  return (-4.60 + 0.1825 * velocity + 0.000104 * velocity**2) * 0.8 + 6;
+}
+
+function average(arr) {
+  return arr.reduce((sum, val) => sum + val, 0) / arr.length;
 }
 
 // Initial race input on page load
