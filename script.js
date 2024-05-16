@@ -6,8 +6,8 @@ function addRaceInput() {
   newRaceDiv.classList.add("race-input");
   newRaceDiv.innerHTML = `
     <select class="distance">
-      <option value="5000">5Km</option>
-      <option value="10000">10Km</option>
+      <option value="5000">5KM</option>
+      <option value="10000">10KM</option>
       <option value="21097.5">Half Marathon</option>
       <option value="42195">Marathon</option>
     </select>
@@ -26,10 +26,10 @@ function calculateVO2Max() {
     const distance = parseFloat(distanceSelect.value);
     const timeString = timeInput.value;
 
-    // Validate time format and parse correctly
+    // Validate time format
     if (!timeString.match(/^(\d{1,2}):(\d{1,2}):(\d{1,2})$/)) {
       alert("Invalid time format. Use hh:mm:ss");
-      return; 
+      return;
     }
 
     const timeParts = timeString.split(':');
@@ -37,12 +37,15 @@ function calculateVO2Max() {
     const minutes = parseInt(timeParts[1], 10);
     const seconds = parseInt(timeParts[2], 10);
     const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
-    
-    races.push({ distance, timeInSeconds });
+
+    // Calculate velocity in meters per second
+    const velocity = distance / timeInSeconds; 
+
+    races.push({ distance, timeInSeconds, velocity }); 
   }
 
-  const jackDanielsResults = races.map(race => calculateJackDaniels(race.distance, race.timeInSeconds));
-  const riegelResults = races.map(race => calculateRiegel(race.distance, race.timeInSeconds));
+  const jackDanielsResults = races.map(race => calculateJackDaniels(race.velocity));
+  const riegelResults = races.map(race => calculateRiegel(race.velocity));
 
   const avgJackDaniels = average(jackDanielsResults);
   const avgRiegel = average(riegelResults);
