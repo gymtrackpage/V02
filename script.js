@@ -39,7 +39,7 @@ function calculateVO2Max() {
     const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
     
     // Calculate velocity in meters per minute
-    const velocityMetersPerMinute = distance / (timeInSeconds / 60); 
+    const velocityMetersPerMinute = distance / (timeInSeconds * 60); 
 
     races.push({ distance, timeInSeconds, velocityMetersPerMinute }); 
   }
