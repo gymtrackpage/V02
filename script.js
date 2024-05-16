@@ -16,7 +16,7 @@ function addRaceInput() {
   raceInputsDiv.appendChild(newRaceDiv);
 }
 
-ffunction calculateVO2Max() {
+function calculateVO2Max() {
   const races = [];
   const raceInputs = document.querySelectorAll('.race-input');
 
@@ -54,9 +54,10 @@ ffunction calculateVO2Max() {
   document.getElementById('riegelResult').textContent = avgRiegel.toFixed(2);
 }
 
-function calculateJackDaniels(velocity) { 
+function calculateJackDaniels(velocity) {
   const VDOT = -4.6 + 0.182258 * velocity + 0.000104 * velocity**2;
-  return (VDOT + 1.4) / 0.8;
+  const VO2max = (VDOT + 1.4) / 0.8;
+  return VO2max;
 }
 
 function calculateRiegel(velocity) { 
