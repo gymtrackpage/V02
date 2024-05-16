@@ -10,7 +10,7 @@ function addRaceInput() {
       <option value="21097.5">Half Marathon</option>
       <option value="42195">Marathon</option>
     </select>
-    <input type="time" class="time" step="1" value="00:20:00">
+    <input type="text" class="time" placeholder="hh:mm:ss">
   `;
   raceInputsDiv.appendChild(newRaceDiv);
 }
@@ -51,5 +51,19 @@ function average(arr) {
   return arr.reduce((sum, val) => sum + val, 0) / arr.length;
 }
 
+for (let i = 0; i < raceInputs.length; i += 2) {
+  const distance = parseFloat(raceInputs[i].value);
+  const timeString = raceInputs[i + 1].value;
+
+  // Validate time format
+  if (!timeString.match(/^(\d{1,2}):(\d{1,2}):(\d{1,2})$/)) {
+    alert("Invalid time format. Use hh:mm:ss");
+    return;
+  }
+
+  const timeParts = timeString.split(':');
+  const timeInSeconds = (+timeParts[0]) * 3600 + (+timeParts[1]) * 60 + (+timeParts[2]); 
+  races.push({ distance, timeInSeconds });
+}
 // Initial race input on page load
 addRaceInput();
