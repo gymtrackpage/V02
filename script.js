@@ -26,14 +26,18 @@ function calculateVO2Max() {
     const distance = parseFloat(distanceSelect.value);
     const timeString = timeInput.value;
 
-    // Validate time format
+    // Validate time format and parse correctly
     if (!timeString.match(/^(\d{1,2}):(\d{1,2}):(\d{1,2})$/)) {
       alert("Invalid time format. Use hh:mm:ss");
-      return; // Stop calculation if invalid time
+      return; 
     }
 
     const timeParts = timeString.split(':');
-    const timeInSeconds = (+timeParts[0]) * 3600 + (+timeParts[1]) * 60 + (+timeParts[2]);
+    const hours = parseInt(timeParts[0], 10);
+    const minutes = parseInt(timeParts[1], 10);
+    const seconds = parseInt(timeParts[2], 10);
+    const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
+    
     races.push({ distance, timeInSeconds });
   }
 
