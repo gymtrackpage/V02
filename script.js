@@ -39,7 +39,7 @@ function calculateVO2Max() {
     const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
     
     // Calculate velocity in meters per minute
-    const velocityMetersPerMinute = distance / (timeInSeconds * 60); 
+    const velocityMetersPerMinute = distance / (timeInSeconds / 60); 
 
     races.push({ distance, timeInSeconds, velocityMetersPerMinute }); 
   }
@@ -60,7 +60,7 @@ function calculateVO2Max() {
 
 function calculateJackDaniels(velocityMetersPerMinute, age, gender) {
   const velocityMetersPerSecond = velocityMetersPerMinute / 60;
-  const VDOT = -4.60 + 0.182258 * velocityMetersPerSecond + 0.000104 * velocityMetersPerSecond**2;
+  const VDOT = -4.60 + 0.182258 * velocityMetersPerSecond + 0.000104 * ( velocityMetersPerSecond * velocityMetersPerSecond);
   return 31.025 + 3.238 * VDOT - 3.248 * age + 0.1536 * gender; // Corrected VO2max calculation
 }
 
