@@ -16,7 +16,7 @@ function addRaceInput() {
   raceInputsDiv.appendChild(newRaceDiv);
 }
 
-function calculateVO2Max() {
+ffunction calculateVO2Max() {
   const races = [];
   const raceInputs = document.querySelectorAll('.race-input');
 
@@ -29,11 +29,11 @@ function calculateVO2Max() {
     // Validate time format
     if (!timeString.match(/^(\d{1,2}):(\d{1,2}):(\d{1,2})$/)) {
       alert("Invalid time format. Use hh:mm:ss");
-      return;
+      return; 
     }
 
     const timeParts = timeString.split(':');
-    const hours = parseInt(timeParts[0], 10);
+    const hours = parseInt(timeParts[0], 10) || 0; // Default to 0 if no hours
     const minutes = parseInt(timeParts[1], 10);
     const seconds = parseInt(timeParts[2], 10);
     const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
@@ -44,8 +44,8 @@ function calculateVO2Max() {
     races.push({ distance, timeInSeconds, velocity }); 
   }
 
-  const jackDanielsResults = races.map(race => calculateJackDaniels(race.velocity)); // Fixed variable name
-  const riegelResults = races.map(race => calculateRiegel(race.velocity)); // Fixed variable name
+  const jackDanielsResults = races.map(race => calculateJackDaniels(race.velocity));
+  const riegelResults = races.map(race => calculateRiegel(race.velocity));
 
   const avgJackDaniels = average(jackDanielsResults);
   const avgRiegel = average(riegelResults);
