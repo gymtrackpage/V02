@@ -23,7 +23,7 @@ function calculateVO2Max() {
   for (let i = 0; i < raceInputs.length; i++) {
     const distanceSelect = raceInputs[i].querySelector('.distance');
     const timeInput = raceInputs[i].querySelector('.time');
-    const distanceMeters = parseFloat(distanceSelect.value);
+    const distance = parseFloat(distanceSelect.value);
     const timeString = timeInput.value;
 
     // Validate time format
@@ -39,12 +39,16 @@ function calculateVO2Max() {
     const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
     
     // Calculate velocity in meters per minute
-    const velocityMetersPerMinute = distanceMeters / (timeInSeconds / 60); 
+    const velocityMetersPerMinute = distance / (timeInSeconds / 60); 
 
-    races.push({ distanceMeters, timeInSeconds, velocityMetersPerMinute }); 
+    races.push({ distance, timeInSeconds, velocityMetersPerMinute }); 
   }
 
-  const jackDanielsResults = races.map(race => calculateJackDaniels(race.velocityMetersPerMinute));
+  // Get age and gender
+  const age = parseFloat(document.getElementById('age').value);
+  const gender = parseInt(document.getElementById('gender').value, 10);
+
+  const jackDanielsResults = races.map(race => calculateJackDaniels(race.velocityMetersPerMinute, age, gender));
   const riegelResults = races.map(race => calculateRiegel(race.velocityMetersPerMinute));
 
   const avgJackDaniels = average(jackDanielsResults);
@@ -54,15 +58,15 @@ function calculateVO2Max() {
   document.getElementById('riegelResult').textContent = avgRiegel.toFixed(2);
 }
 
-function calculateJackDaniels(velocityMetersPerMinute) {
+function calculateJackDaniels(velocityMetersPerMinute, age, gender) {
   const velocityMetersPerSecond = velocityMetersPerMinute / 60;
-  const VDOT = -4.6 + 0.182258 * velocityMetersPerSecond + 0.000104 * velocityMetersPerSecond * velocityMetersPerSecond;
-  return (VDOT + 1.4) / 0.8;
+  const VDOT = -4.60 + 0.182258 * velocityMetersPerSecond + 0.000104 * velocityMetersPerSecond**2;
+  return 31.025 + 3.238 * VDOT - 3.248 * age + 0.1536 * gender; // Corrected VO2max calculation
 }
 
 function calculateRiegel(velocityMetersPerMinute) {
   const velocityMetersPerSecond = velocityMetersPerMinute / 60;
-  return (-4.60 + 0.1825 * velocityMetersPerSecond + 0.000104 * velocityMetersPerSecond * velocityMetersPerSecond) * 0.8 + 6;
+  return (-4.60 + 0.1825 * velocityMetersPerSecond + 0.000104 * velocityMetersPerSecond**2) * 0.8 + 6;
 }
 
 function average(arr) {
