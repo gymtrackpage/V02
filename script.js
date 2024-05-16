@@ -3,6 +3,7 @@ document.getElementById('addRace').addEventListener('click', addRaceInput);
 function addRaceInput() {
   const raceInputsDiv = document.getElementById('raceInputs');
   const newRaceDiv = document.createElement('div');
+  newRaceDiv.classList.add("race-input");
   newRaceDiv.innerHTML = `
     <select class="distance">
       <option value="5000">5K</option>
@@ -17,11 +18,13 @@ function addRaceInput() {
 
 function calculateVO2Max() {
   const races = [];
-  const raceInputs = document.querySelectorAll('.distance, .time');
+  const raceInputs = document.querySelectorAll('.race-input');
 
-  for (let i = 0; i < raceInputs.length; i += 2) {
-    const distance = parseFloat(raceInputs[i].value);
-    const timeString = raceInputs[i + 1].value;
+  for (let i = 0; i < raceInputs.length; i++) {
+    const distanceSelect = raceInputs[i].querySelector('.distance');
+    const timeInput = raceInputs[i].querySelector('.time');
+    const distance = parseFloat(distanceSelect.value);
+    const timeString = timeInput.value;
 
     // Validate time format
     if (!timeString.match(/^(\d{1,2}):(\d{1,2}):(\d{1,2})$/)) {
@@ -34,7 +37,7 @@ function calculateVO2Max() {
     races.push({ distance, timeInSeconds });
   }
 
-  // ... (rest of the calculation logic remains the same)
+  // ... (rest of the calculation logic using 'races' array remains the same)
 }
 
 // Initial race input on page load
